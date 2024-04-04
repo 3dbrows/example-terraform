@@ -6,10 +6,10 @@ provider "aws" {
   secret_key                  = "mock_secret_key"
 }
 
-resource "aws_instance" "my_web_app" {
+resource "aws_instance" "my_web_app_alpha" {
   ami           = "ami-005e54dee72cc1d00"
 
-  instance_type = "m3.xlarge" # <<<<<<<<<< Try changing this to m5.xlarge to compare the costs
+  instance_type = "m5.2xlarge" # <<<<<<<<<< Try changing this to m5.xlarge to compare the costs
 
   tags = {
     Environment = "production"
@@ -21,7 +21,7 @@ resource "aws_instance" "my_web_app" {
   }
 }
 
-resource "aws_lambda_function" "my_hello_world" {
+resource "aws_lambda_function" "my_hello_world_beta" {
   runtime       = "nodejs12.x"
   handler       = "exports.test"
   image_uri     = "test"
@@ -34,3 +34,15 @@ resource "aws_lambda_function" "my_hello_world" {
   }
 }
 
+resource "aws_lambda_function" "my_hello_world_charlie" {
+  runtime       = "nodejs12.x"
+  handler       = "exports.test"
+  image_uri     = "test"
+  function_name = "test"
+  role          = "arn:aws:ec2:us-east-1:123123123123:instance/i-1231231231"
+
+  memory_size = 512
+  tags = {
+    Environment = "Staging"
+  }
+}
